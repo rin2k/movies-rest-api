@@ -6,11 +6,11 @@ import { createFavoriteSchema, deleteFavoriteSchema } from "../schema";
 const router = Router();
 
 // Get favorites by user ID
-router.get(
-  "/users/favorites",
-  authenticateToken,
-  FavoriteController.getFavoritesByUserId
-);
+// router.get(
+//   "/users/favorites",
+//   authenticateToken,
+//   FavoriteController.getFavoritesByUserId
+// );
 
 // Create a favorite
 router.post(
@@ -22,7 +22,7 @@ router.post(
 
 // Delete a favorite
 router.delete(
-  "/favorites/:favoriteId",
+  "/movies/:movieId/favorites",
   authenticateToken,
   validateRequestSchema(deleteFavoriteSchema),
   FavoriteController.deleteFavorite

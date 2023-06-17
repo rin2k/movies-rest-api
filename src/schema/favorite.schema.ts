@@ -14,7 +14,7 @@ export type CreateFavoriteParams = yup.InferType<
 // Delete a favorite
 export const deleteFavoriteSchema = yup.object({
   params: yup.object({
-    favoriteId: yup.number().required(),
+    movieId: yup.number().required(),
   }),
 });
 

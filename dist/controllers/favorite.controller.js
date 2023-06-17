@@ -37,6 +37,21 @@ const createFavorite = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
         if (!movie) {
             return (0, utils_1.sendResponse)(res, utils_1.ErrorCode["movie-not-found"]);
         }
+        const checkfavorite = yield models_1.FavoriteModel.findOne({
+            where: {
+                userId: req.user.id,
+                movieId,
+            },
+        });
+        if (checkfavorite) {
+            console.log("dit me");
+            (0, utils_1.sendResponse)(res, {
+                code: 400,
+                status: "Error",
+                message: "Vui lòng thử lại",
+            });
+            return;
+        }
         const favorite = yield models_1.FavoriteModel.sync({ alter: true }).then(() => {
             return models_1.FavoriteModel.create({
                 movieId,
@@ -55,14 +70,19 @@ const createFavorite = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
 });
 const deleteFavorite = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { favoriteId } = req.params;
-        const favorite = yield models_1.FavoriteModel.findByPk(favoriteId);
+        const { movieId } = req.params;
+        const favorite = yield models_1.FavoriteModel.findOne({
+            where: {
+                userId: req.user.id,
+                movieId,
+            },
+        });
         if (!favorite) {
             return (0, utils_1.sendResponse)(res, utils_1.ErrorCode["favorite-not-found"]);
         }
         favorite.destroy();
         return (0, utils_1.sendResponse)(res, {
-            code: 204,
+            code: 200,
             status: "Success",
             message: "Xoá yêu thích thành công.",
         });

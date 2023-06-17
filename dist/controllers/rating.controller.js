@@ -18,39 +18,44 @@ const getRatingByMovie = (req, res, next) => __awaiter(void 0, void 0, void 0, f
         if (!movie) {
             return (0, utils_1.sendResponse)(res, utils_1.ErrorCode["movie-not-found"]);
         }
-        const ratings = yield models_1.RatingModel.findAll({
+        const rating = yield models_1.RatingModel.findOne({
             where: {
                 movieId,
-            },
-        });
-        return (0, utils_1.sendResponse)(res, {
-            code: 200,
-            status: "Success",
-            data: ratings,
-        });
-    }
-    catch (error) {
-        next(error);
-    }
-});
-const getRatingByUserId = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const ratings = yield models_1.RatingModel.findAll({
-            where: {
                 userId: req.user.id,
             },
         });
         return (0, utils_1.sendResponse)(res, {
             code: 200,
             status: "Success",
-            data: ratings,
+            data: rating,
         });
     }
     catch (error) {
         next(error);
     }
 });
-const createRating = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+// const getRatingByUserId: RequestHandler<
+//   unknown,
+//   ResponseResult<Array<Favorite> | undefined>,
+//   unknown,
+//   unknown
+// > = async (req, res, next) => {
+//   try {
+//     const ratings = await RatingModel.findAll({
+//       where: {
+//         userId: req.user.id,
+//       },
+//     });
+//     return sendResponse(res, {
+//       code: 200,
+//       status: "Success",
+//       data: ratings,
+//     });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
+const rateMovie = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { movieId } = req.params;
         const { rating } = req.body;
@@ -59,10 +64,26 @@ const createRating = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
         if (!movie) {
             return (0, utils_1.sendResponse)(res, utils_1.ErrorCode["movie-not-found"]);
         }
+        const ratingFound = yield models_1.RatingModel.findOne({
+            where: {
+                userId: userId,
+                movieId: movieId,
+            },
+        });
+        if (ratingFound) {
+            ratingFound.update({
+                rating,
+            });
+            return (0, utils_1.sendResponse)(res, {
+                code: 200,
+                status: "Success",
+                message: "Cập nhật đánh giá thành công.",
+            });
+        }
         const ratingRecord = yield models_1.RatingModel.sync({ alter: true }).then(() => {
             return models_1.RatingModel.create({
                 movieId,
-                userId,
+                userId: userId,
                 rating,
             });
         });
@@ -76,31 +97,35 @@ const createRating = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
         next(error);
     }
 });
-const updateRating = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        const { ratingId } = req.params;
-        const { rating } = req.body;
-        const ratingFound = yield models_1.RatingModel.findByPk(ratingId);
-        if (!ratingFound) {
-            return (0, utils_1.sendResponse)(res, utils_1.ErrorCode["favorite-not-found"]);
-        }
-        ratingFound.update({
-            rating,
-        });
-        return (0, utils_1.sendResponse)(res, {
-            code: 200,
-            status: "Success",
-            message: "Cập nhật đánh giá thành công.",
-        });
-    }
-    catch (error) {
-        next(error);
-    }
-});
+// const updateRating: RequestHandler<
+//   UpdateRatingParams,
+//   ResponseResult<undefined>,
+//   UpdateRatingBody,
+//   unknown
+// > = async (req, res, next) => {
+//   try {
+//     const { ratingId } = req.params;
+//     const { rating } = req.body;
+//     const ratingFound = await RatingModel.findByPk(ratingId);
+//     if (!ratingFound) {
+//       return sendResponse(res, ErrorCode["favorite-not-found"]);
+//     }
+//     ratingFound.update({
+//       rating,
+//     });
+//     return sendResponse(res, {
+//       code: 200,
+//       status: "Success",
+//       message: "Cập nhật đánh giá thành công.",
+//     });
+//   } catch (error) {
+//     next(error);
+//   }
+// };
 const RatingController = {
     getRatingByMovie,
-    getRatingByUserId,
-    createRating,
-    updateRating,
+    // getRatingByUserId,
+    rateMovie,
+    // updateRating,
 };
 exports.default = RatingController;

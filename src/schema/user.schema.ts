@@ -16,7 +16,7 @@ export const signupSchema = yup.object({
     name: yup.string().required(),
     email: yup.string().email().required(),
     password: yup.string().min(3).max(20).required(),
-    birthday: yup.date().required(),
+    birthday: yup.string().required(),
   }),
 });
 
@@ -27,7 +27,7 @@ export const updateUserSchema = yup.object({
   body: yup.object({
     name: yup.string(),
     photoURL: yup.string(),
-    birthday: yup.date().required(),
+    birthday: yup.string().required(),
   }),
 });
 

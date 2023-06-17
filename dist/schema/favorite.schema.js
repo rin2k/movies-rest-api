@@ -34,6 +34,6 @@ exports.createFavoriteSchema = yup.object({
 // Delete a favorite
 exports.deleteFavoriteSchema = yup.object({
     params: yup.object({
-        favoriteId: yup.number().required(),
+        movieId: yup.number().required(),
     }),
 });

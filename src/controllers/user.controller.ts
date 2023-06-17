@@ -12,7 +12,7 @@ const signUp: RequestHandler<
   ResponseResult<User | undefined>,
   SignupBody,
   unknown
-> = async (req, res) => {
+> = async (req, res, next) => {
   try {
     const { name, email, birthday, password } = req.body;
 
@@ -21,7 +21,7 @@ const signUp: RequestHandler<
     });
 
     if (existingUser) {
-      return res.status(200).json({
+      sendResponse(res, {
         code: 400,
         status: "Error",
         message: "Email đã được đăng ký",
@@ -39,12 +39,14 @@ const signUp: RequestHandler<
       });
     });
 
-    return res.status(200).json({
+    return sendResponse(res, {
       code: 200,
       status: "Success",
       message: "Tạo tài khoản thành công.",
     });
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 };
 
 const login: RequestHandler<
@@ -55,12 +57,11 @@ const login: RequestHandler<
 > = async (req, res, next) => {
   try {
     const { email, password } = req.body;
-
     const user = await UserModel.findOne({ where: { email: email } });
 
     if (!user) {
-      return res.status(200).json({
-        code: 401,
+      return sendResponse(res, {
+        code: 400,
         status: "Error",
         message: "Email hoặc mật khẩu không đúng, vui lòng thử lại.",
       });
@@ -72,8 +73,8 @@ const login: RequestHandler<
     );
 
     if (!isPasswordMatch) {
-      return res.status(200).json({
-        code: 401,
+      return sendResponse(res, {
+        code: 400,
         status: "Error",
         message: "Email hoặc mật khẩu không đúng, vui lòng thử lại.",
       });
@@ -81,9 +82,11 @@ const login: RequestHandler<
 
     const userObj = _.omit(user.toJSON() as User, ["password"]);
 
-    const accessToken = generateToken(userObj);
+    const accessToken = generateToken(user);
 
-    return res.status(200).json({
+    console.log(accessToken);
+
+    return sendResponse(res, {
       code: 200,
       status: "Success",
       message: "Đăng nhập thành công.",
@@ -156,7 +159,6 @@ const getProfile: RequestHandler<
     return sendResponse(res, {
       code: 200,
       status: "Success",
-      message: "",
       data: user,
     });
   } catch (error) {}

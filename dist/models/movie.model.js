@@ -14,18 +14,18 @@ const MovieModel = config_1.connection.define(utils_1.TABLE_NAME.MOVIES, {
         allowNull: false,
     },
     description: {
-        type: sequelize_1.DataTypes.STRING,
+        type: sequelize_1.DataTypes.TEXT,
         allowNull: false,
     },
     genre: {
-        type: sequelize_1.DataTypes.STRING,
+        type: sequelize_1.DataTypes.TEXT,
         allowNull: false,
-        get() {
-            const value = this.getDataValue("genre");
-            return value ? JSON.parse(value) : [];
-        },
+        // get() {
+        //   const value: any = this.getDataValue("genre");
+        //   return value ? value : [];
+        // },
         set(value) {
-            this.setDataValue("genre", JSON.stringify(value));
+            this.setDataValue("genre", value.join(", "));
         },
     },
     director: {
@@ -40,8 +40,12 @@ const MovieModel = config_1.connection.define(utils_1.TABLE_NAME.MOVIES, {
         type: sequelize_1.DataTypes.INTEGER,
         allowNull: false,
     },
-    poster: {
-        type: sequelize_1.DataTypes.STRING,
+    posterHorizontal: {
+        type: sequelize_1.DataTypes.TEXT("long"),
+        allowNull: false,
+    },
+    posterVertical: {
+        type: sequelize_1.DataTypes.TEXT("long"),
         allowNull: false,
     },
     country: {
@@ -49,18 +53,22 @@ const MovieModel = config_1.connection.define(utils_1.TABLE_NAME.MOVIES, {
         allowNull: false,
     },
     actors: {
-        type: sequelize_1.DataTypes.STRING,
+        type: sequelize_1.DataTypes.TEXT,
+        allowNull: false,
+    },
+    videoURL: {
+        type: sequelize_1.DataTypes.TEXT,
         allowNull: false,
         get() {
-            const value = this.getDataValue("actors");
+            const value = this.getDataValue("videoURL");
             return value ? JSON.parse(value) : [];
         },
         set(value) {
-            this.setDataValue("actors", JSON.stringify(value));
+            this.setDataValue("videoURL", JSON.stringify(value));
         },
     },
-    videoURL: {
-        type: sequelize_1.DataTypes.STRING,
+    trailerURL: {
+        type: sequelize_1.DataTypes.TEXT,
         allowNull: false,
     },
 });

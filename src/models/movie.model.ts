@@ -14,18 +14,18 @@ const MovieModel = connection.define<Movie>(TABLE_NAME.MOVIES, {
     allowNull: false,
   },
   description: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     allowNull: false,
   },
   genre: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
     allowNull: false,
-    get() {
-      const value: any = this.getDataValue("genre");
-      return value ? JSON.parse(value) : [];
-    },
+    // get() {
+    //   const value: any = this.getDataValue("genre");
+    //   return value ? value : [];
+    // },
     set(value: string[]) {
-      this.setDataValue("genre", JSON.stringify(value) as any);
+      this.setDataValue("genre", value.join(", ") as any);
     },
   },
   director: {
@@ -40,8 +40,12 @@ const MovieModel = connection.define<Movie>(TABLE_NAME.MOVIES, {
     type: DataTypes.INTEGER,
     allowNull: false,
   },
-  poster: {
-    type: DataTypes.STRING,
+  posterHorizontal: {
+    type: DataTypes.TEXT("long"),
+    allowNull: false,
+  },
+  posterVertical: {
+    type: DataTypes.TEXT("long"),
     allowNull: false,
   },
   country: {
@@ -49,18 +53,22 @@ const MovieModel = connection.define<Movie>(TABLE_NAME.MOVIES, {
     allowNull: false,
   },
   actors: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT,
+    allowNull: false,
+  },
+  videoURL: {
+    type: DataTypes.TEXT,
     allowNull: false,
     get() {
-      const value: any = this.getDataValue("actors");
+      const value: any = this.getDataValue("videoURL");
       return value ? JSON.parse(value) : [];
     },
     set(value: string[]) {
-      this.setDataValue("actors", JSON.stringify(value) as any);
+      this.setDataValue("videoURL", JSON.stringify(value) as any);
     },
   },
-  videoURL: {
-    type: DataTypes.STRING,
+  trailerURL: {
+    type: DataTypes.TEXT,
     allowNull: false,
   },
 });

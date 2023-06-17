@@ -2,15 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const data = [
     {
-        code: "action-film",
+        code: "action",
         name: "Hành Động",
     },
     {
-        code: "adventure-film",
+        code: "adventure",
         name: "Phiêu Lưu",
     },
     {
-        code: "animated-film",
+        code: "animated",
         name: "Hoạt Hình",
     },
     {

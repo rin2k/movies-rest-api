@@ -17,10 +17,21 @@ const apiVersion = "1";
 const apiRoutes = `/api/v${apiVersion}`;
 
 // parse application/x-www-form-urlencoded
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(
+  bodyParser.urlencoded({
+    limit: "50mb",
+    extended: true,
+    parameterLimit: 50000,
+  })
+);
 
 // parse application/json
-app.use(bodyParser.json());
+app.use(
+  bodyParser.json({
+    extended: true,
+    limit: "50mb",
+  })
+);
 
 app.get("/", (req: any, res: Response) => {
   res.send("Real Film!.");

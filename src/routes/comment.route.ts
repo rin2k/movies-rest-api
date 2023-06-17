@@ -24,12 +24,12 @@ router.get(
   CommentController.getCommentsByMovie
 );
 
-// Get comments by user ID
-router.get(
-  "/users/comments",
-  authenticateToken,
-  CommentController.getCommentsByUserId
-);
+// // Get comments by user ID
+// router.get(
+//   "/users/comments",
+//   authenticateToken,
+//   CommentController.getCommentsByUserId
+// );
 
 // Create a comment
 router.post(

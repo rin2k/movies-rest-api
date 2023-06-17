@@ -1,12 +1,13 @@
 import { Response } from "express";
 
 const sendResponse = <T>(res: Response<T>, result: T) => {
-  const response = {
-    version: "1.0.0",
-    timestamp: new Date(),
-    result: result,
+  const response: any = {
+    ...result,
   };
-  res.status(200).json(response as T);
+
+  const code = response?.code;
+
+  res.status(code).json(response);
 };
 
 export default sendResponse;

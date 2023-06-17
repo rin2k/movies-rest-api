@@ -17,14 +17,14 @@ const lodash_1 = __importDefault(require("lodash"));
 const middleware_1 = require("../middleware");
 const models_1 = require("../models");
 const utils_1 = require("../utils");
-const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const signUp = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { name, email, birthday, password } = req.body;
         const existingUser = yield models_1.UserModel.findOne({
             where: { email: email },
         });
         if (existingUser) {
-            return res.status(200).json({
+            (0, utils_1.sendResponse)(res, {
                 code: 400,
                 status: "Error",
                 message: "Email đã được đăng ký",
@@ -39,36 +39,39 @@ const signUp = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
                 password: hashedPassword,
             });
         });
-        return res.status(200).json({
+        return (0, utils_1.sendResponse)(res, {
             code: 200,
             status: "Success",
             message: "Tạo tài khoản thành công.",
         });
     }
-    catch (error) { }
+    catch (error) {
+        next(error);
+    }
 });
 const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { email, password } = req.body;
         const user = yield models_1.UserModel.findOne({ where: { email: email } });
         if (!user) {
-            return res.status(200).json({
-                code: 401,
+            return (0, utils_1.sendResponse)(res, {
+                code: 400,
                 status: "Error",
                 message: "Email hoặc mật khẩu không đúng, vui lòng thử lại.",
             });
         }
         const isPasswordMatch = yield bcryptjs_1.default.compare(password, user.password);
         if (!isPasswordMatch) {
-            return res.status(200).json({
-                code: 401,
+            return (0, utils_1.sendResponse)(res, {
+                code: 400,
                 status: "Error",
                 message: "Email hoặc mật khẩu không đúng, vui lòng thử lại.",
             });
         }
         const userObj = lodash_1.default.omit(user.toJSON(), ["password"]);
-        const accessToken = (0, middleware_1.generateToken)(userObj);
-        return res.status(200).json({
+        const accessToken = (0, middleware_1.generateToken)(user);
+        console.log(accessToken);
+        return (0, utils_1.sendResponse)(res, {
             code: 200,
             status: "Success",
             message: "Đăng nhập thành công.",
@@ -128,7 +131,6 @@ const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         return (0, utils_1.sendResponse)(res, {
             code: 200,
             status: "Success",
-            message: "",
             data: user,
         });
     }

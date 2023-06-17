@@ -42,6 +42,22 @@ const createFavorite: RequestHandler<
       return sendResponse(res, ErrorCode["movie-not-found"]);
     }
 
+    const checkfavorite = await FavoriteModel.findOne({
+      where: {
+        userId: req.user.id,
+        movieId,
+      },
+    });
+    if (checkfavorite) {
+      console.log("dit me");
+      sendResponse(res, {
+        code: 400,
+        status: "Error",
+        message: "Vui lòng thử lại",
+      });
+      return;
+    }
+
     const favorite = await FavoriteModel.sync({ alter: true }).then(() => {
       return FavoriteModel.create({
         movieId,
@@ -66,16 +82,21 @@ const deleteFavorite: RequestHandler<
   unknown
 > = async (req, res, next) => {
   try {
-    const { favoriteId } = req.params;
+    const { movieId } = req.params;
 
-    const favorite = await FavoriteModel.findByPk(favoriteId);
+    const favorite = await FavoriteModel.findOne({
+      where: {
+        userId: req.user.id,
+        movieId,
+      },
+    });
     if (!favorite) {
       return sendResponse(res, ErrorCode["favorite-not-found"]);
     }
     favorite.destroy();
 
     return sendResponse(res, {
-      code: 204,
+      code: 200,
       status: "Success",
       message: "Xoá yêu thích thành công.",
     });

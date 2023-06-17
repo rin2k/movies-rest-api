@@ -7,11 +7,10 @@ import {
 
 export interface User
   extends Model<InferAttributes<User>, InferCreationAttributes<User>> {
-  // Some fields are optional when calling UserModel.create() or UserModel.build()
   id: CreationOptional<number>;
   name: string;
   email: string;
-  birthday: Date;
+  birthday: string;
   createdAt?: Date;
   updatedAt?: Date;
   password?: string;

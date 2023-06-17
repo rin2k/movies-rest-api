@@ -10,33 +10,34 @@ import {
 const router = Router();
 
 // Get rating by user ID
-router.get(
-  "/users/ratings",
-  authenticateToken,
-  RatingController.getRatingByUserId
-);
+// router.get(
+//   "/users/ratings",
+//   authenticateToken,
+//   RatingController.getRatingByUserId
+// );
 
 // Get rating by movie ID
 router.get(
   "/movies/:movieId/ratings",
+  authenticateToken,
   validateRequestSchema(getRatingByMovieSchema),
   RatingController.getRatingByMovie
 );
 
-// Create a rating
+// Create / Update a rating
 router.post(
   "/movies/:movieId/ratings",
   authenticateToken,
   validateRequestSchema(createRatingSchema),
-  RatingController.createRating
+  RatingController.rateMovie
 );
 
 // Update a rating
-router.put(
-  "/ratings/:ratingId",
-  authenticateToken,
-  validateRequestSchema(updateRatingSchema),
-  RatingController.updateRating
-);
+// router.put(
+//   "/ratings/:ratingId",
+//   authenticateToken,
+//   validateRequestSchema(updateRatingSchema),
+//   RatingController.updateRating
+// );
 
 export default router;

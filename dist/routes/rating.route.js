@@ -6,11 +6,20 @@ const middleware_1 = require("../middleware");
 const schema_1 = require("../schema");
 const router = (0, express_1.Router)();
 // Get rating by user ID
-router.get("/users/ratings", middleware_1.authenticateToken, controllers_1.RatingController.getRatingByUserId);
+// router.get(
+//   "/users/ratings",
+//   authenticateToken,
+//   RatingController.getRatingByUserId
+// );
 // Get rating by movie ID
-router.get("/movies/:movieId/ratings", (0, middleware_1.validateRequestSchema)(schema_1.getRatingByMovieSchema), controllers_1.RatingController.getRatingByMovie);
-// Create a rating
-router.post("/movies/:movieId/ratings", middleware_1.authenticateToken, (0, middleware_1.validateRequestSchema)(schema_1.createRatingSchema), controllers_1.RatingController.createRating);
+router.get("/movies/:movieId/ratings", middleware_1.authenticateToken, (0, middleware_1.validateRequestSchema)(schema_1.getRatingByMovieSchema), controllers_1.RatingController.getRatingByMovie);
+// Create / Update a rating
+router.post("/movies/:movieId/ratings", middleware_1.authenticateToken, (0, middleware_1.validateRequestSchema)(schema_1.createRatingSchema), controllers_1.RatingController.rateMovie);
 // Update a rating
-router.put("/ratings/:ratingId", middleware_1.authenticateToken, (0, middleware_1.validateRequestSchema)(schema_1.updateRatingSchema), controllers_1.RatingController.updateRating);
+// router.put(
+//   "/ratings/:ratingId",
+//   authenticateToken,
+//   validateRequestSchema(updateRatingSchema),
+//   RatingController.updateRating
+// );
 exports.default = router;

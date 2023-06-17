@@ -2,15 +2,15 @@ import { Genre } from "../interfaces";
 
 const data: Array<Genre> = [
   {
-    code: "action-film",
+    code: "action",
     name: "Hành Động",
   },
   {
-    code: "adventure-film",
+    code: "adventure",
     name: "Phiêu Lưu",
   },
   {
-    code: "animated-film",
+    code: "animated",
     name: "Hoạt Hình",
   },
   {
