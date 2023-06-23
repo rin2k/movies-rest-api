@@ -9,7 +9,7 @@ import {
   MovieModel,
   RatingModel,
 } from "../models";
-import { CreateMovieBody } from "../schema";
+import { CreateMovieBody, UpdateMovieBody } from "../schema";
 import { sendResponse } from "../utils";
 
 const createMovie: RequestHandler<
@@ -59,11 +59,34 @@ const createMovie: RequestHandler<
       status: "Success",
       message: "Thêm phim thành công.",
     });
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 };
 
-const updateMovie = async (req: Request, res: Response) => {
+const updateMovie: RequestHandler<any, unknown, any, unknown> = async (
+  req,
+  res,
+  next
+) => {
   try {
+    const {
+      title,
+      description,
+      genre,
+      director,
+      releaseYear,
+      duration,
+      posterHorizontal,
+      posterVertical,
+      country,
+      actors,
+      videoURL,
+      trailerURL,
+    } = req.body;
+
+    const newVideoUrl = typeof videoURL == "object" ? videoURL : [videoURL];
+    const newGenre = typeof genre == "object" ? genre : [genre];
     const { id } = req.params;
     const movie = await MovieModel.findByPk(id);
 
@@ -75,7 +98,19 @@ const updateMovie = async (req: Request, res: Response) => {
       });
     }
 
-    const updateMovie = {};
+    const updateMovie = {
+      title,
+      description,
+      director,
+      releaseYear,
+      duration,
+      posterHorizontal,
+      posterVertical,
+      actors,
+      trailerURL,
+      genre: newGenre,
+      videoURL: newVideoUrl as any,
+    };
 
     movie.update({ ...updateMovie });
 
@@ -285,7 +320,7 @@ const getMoviesByCountry: RequestHandler<
   unknown,
   unknown,
   unknown
-> = async (req, res) => {
+> = async (req, res, next) => {
   try {
     const { countryId } = req.params;
 
@@ -301,8 +336,7 @@ const getMoviesByCountry: RequestHandler<
       data: movies,
     });
   } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Internal server error" });
+    next(error);
   }
 };
 

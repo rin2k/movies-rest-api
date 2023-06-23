@@ -44,10 +44,15 @@ const createMovie = (req, res, next) => {
             message: "Thêm phim thành công.",
         });
     }
-    catch (error) { }
+    catch (error) {
+        next(error);
+    }
 };
-const updateMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const updateMovie = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
+        const { title, description, genre, director, releaseYear, duration, posterHorizontal, posterVertical, country, actors, videoURL, trailerURL, } = req.body;
+        const newVideoUrl = typeof videoURL == "object" ? videoURL : [videoURL];
+        const newGenre = typeof genre == "object" ? genre : [genre];
         const { id } = req.params;
         const movie = yield models_1.MovieModel.findByPk(id);
         if (!movie) {
@@ -57,7 +62,19 @@ const updateMovie = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
                 message: "Không tìm thấy phim.",
             });
         }
-        const updateMovie = {};
+        const updateMovie = {
+            title,
+            description,
+            director,
+            releaseYear,
+            duration,
+            posterHorizontal,
+            posterVertical,
+            actors,
+            trailerURL,
+            genre: newGenre,
+            videoURL: newVideoUrl,
+        };
         movie.update(Object.assign({}, updateMovie));
         return (0, utils_1.sendResponse)(res, {
             code: 200,
@@ -217,7 +234,7 @@ const getMoviesByGenre = (req, res, next) => __awaiter(void 0, void 0, void 0, f
         next(error);
     }
 });
-const getMoviesByCountry = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getMoviesByCountry = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { countryId } = req.params;
         const movies = yield models_1.MovieModel.findAll({
@@ -232,8 +249,7 @@ const getMoviesByCountry = (req, res) => __awaiter(void 0, void 0, void 0, funct
         });
     }
     catch (error) {
-        console.log(error);
-        res.status(500).json({ error: "Internal server error" });
+        next(error);
     }
 });
 const getFavoriteMovies = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {

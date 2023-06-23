@@ -1,6 +1,7 @@
 import { RequestHandler } from "express";
 
 import { Schema, ValidationError } from "yup";
+import { sendResponse } from "../utils";
 
 const validateRequestSchema =
   (schema: Schema): RequestHandler<unknown> =>
@@ -10,7 +11,7 @@ const validateRequestSchema =
       next();
     } catch (error) {
       if (error instanceof ValidationError) {
-        res.status(200).json({
+        return sendResponse(res, {
           code: 400,
           status: "Error",
           message: error.message,

@@ -10,6 +10,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const yup_1 = require("yup");
+const utils_1 = require("../utils");
 const validateRequestSchema = (schema) => (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         yield schema.validate(req);
@@ -17,7 +18,7 @@ const validateRequestSchema = (schema) => (req, res, next) => __awaiter(void 0, 
     }
     catch (error) {
         if (error instanceof yup_1.ValidationError) {
-            res.status(200).json({
+            return (0, utils_1.sendResponse)(res, {
                 code: 400,
                 status: "Error",
                 message: error.message,

@@ -23,8 +23,9 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.createMovieSchema = void 0;
+exports.updateMovieSchema = exports.createMovieSchema = void 0;
 const yup = __importStar(require("yup"));
+// Create a movie
 exports.createMovieSchema = yup.object({
     body: yup.object({
         title: yup.string().required(),
@@ -70,5 +71,58 @@ exports.createMovieSchema = yup.object({
             .string()
             .url("Link trailer không hợp lệ")
             .required("Trailer URL is required"),
+    }),
+});
+// Update a movie
+exports.updateMovieSchema = yup.object().shape({
+    body: yup.object().shape({
+        title: yup.string().notRequired(),
+        description: yup.string().notRequired(),
+        genre: yup
+            .mixed()
+            .test("isValidGenre", "Genre is invalid", (value) => {
+            if (value !== undefined) {
+                if (Array.isArray(value)) {
+                    return yup.array().of(yup.string()).isValidSync(value);
+                }
+                else if (typeof value === "number") {
+                    return yup.number().isValidSync(value);
+                }
+                else if (typeof value === "string") {
+                    return yup.string().isValidSync(value);
+                }
+                return false;
+            }
+            return true;
+        })
+            .nullable()
+            .transform((value, originalValue) => originalValue === "" ? null : value),
+        director: yup.string().notRequired(),
+        releaseYear: yup.string().notRequired(),
+        duration: yup.number().integer().notRequired(),
+        posterHorizontal: yup.string().notRequired(),
+        posterVertical: yup.string().notRequired(),
+        country: yup.string().notRequired(),
+        actors: yup.string().notRequired(),
+        videoURL: yup
+            .mixed()
+            .test("isValidVideoURL", "Video URL is invalid", (value) => {
+            if (value !== undefined) {
+                if (Array.isArray(value)) {
+                    return yup.array().of(yup.string()).isValidSync(value);
+                }
+                else if (typeof value === "number") {
+                    return yup.number().isValidSync(value);
+                }
+                else if (typeof value === "string") {
+                    return yup.string().isValidSync(value);
+                }
+                return false;
+            }
+            return true;
+        })
+            .nullable()
+            .transform((value, originalValue) => originalValue === "" ? null : value),
+        trailerURL: yup.string().url("Invalid trailer URL").notRequired(),
     }),
 });

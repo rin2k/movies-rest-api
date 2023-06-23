@@ -4,11 +4,7 @@
   "description": "",
   "main": "./src/server.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "your_script": "",
-    "build": "rimraf dist && npx tsc",
-    "tsc": "npx tsc --watch && node dist/server.js",
-    "dev": "node --watch 'src/**/*.ts'"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",

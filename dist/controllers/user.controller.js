@@ -24,7 +24,7 @@ const signUp = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
             where: { email: email },
         });
         if (existingUser) {
-            (0, utils_1.sendResponse)(res, {
+            return (0, utils_1.sendResponse)(res, {
                 code: 400,
                 status: "Error",
                 message: "Email đã được đăng ký",

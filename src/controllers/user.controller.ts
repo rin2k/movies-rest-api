@@ -21,7 +21,7 @@ const signUp: RequestHandler<
     });
 
     if (existingUser) {
-      sendResponse(res, {
+      return sendResponse(res, {
         code: 400,
         status: "Error",
         message: "Email đã được đăng ký",

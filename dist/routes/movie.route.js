@@ -29,11 +29,11 @@ router.get("/movies/ratings", middleware_1.authenticateToken, controllers_1.Movi
 /**
  * Update a movie.
  */
-router.put("/movies/:id", controllers_1.MovieController.updateMovie);
+router.put("/movies/:id", middleware_1.authenticateToken, (0, middleware_1.validateRequestSchema)(schema_1.updateMovieSchema), controllers_1.MovieController.updateMovie);
 /**
  * Delete a movie.
  */
-router.delete("/movies/:id", controllers_1.MovieController.deleteMovie);
+router.delete("/movies/:id", middleware_1.authenticateToken, controllers_1.MovieController.deleteMovie);
 /**
  * Get of latest movies.
  */

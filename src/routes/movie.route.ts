@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { MovieController } from "../controllers";
 import { authenticateToken, validateRequestSchema } from "../middleware";
-import { createMovieSchema } from "../schema";
+import { createMovieSchema, updateMovieSchema } from "../schema";
 const multer = require("multer");
 
 const router = Router();
@@ -51,12 +51,17 @@ router.get(
 /**
  * Update a movie.
  */
-router.put("/movies/:id", MovieController.updateMovie);
+router.put(
+  "/movies/:id",
+  authenticateToken,
+  validateRequestSchema(updateMovieSchema),
+  MovieController.updateMovie
+);
 
 /**
  * Delete a movie.
  */
-router.delete("/movies/:id", MovieController.deleteMovie);
+router.delete("/movies/:id", authenticateToken, MovieController.deleteMovie);
 
 /**
  * Get of latest movies.
