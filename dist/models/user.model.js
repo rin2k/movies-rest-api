@@ -26,7 +26,7 @@ const UserModel = config_1.connection.define(utils_1.TABLE_NAME.USERS, {
         allowNull: false,
     },
     photoURL: {
-        type: sequelize_1.DataTypes.STRING,
+        type: sequelize_1.DataTypes.TEXT("long"),
         allowNull: true,
     },
     isAdmin: {

@@ -26,7 +26,7 @@ const UserModel = connection.define<User>(TABLE_NAME.USERS, {
     allowNull: false,
   },
   photoURL: {
-    type: DataTypes.STRING,
+    type: DataTypes.TEXT("long"),
     allowNull: true,
   },
   isAdmin: {

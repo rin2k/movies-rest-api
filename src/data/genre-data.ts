@@ -34,28 +34,12 @@ const data: Array<Genre> = [
     name: "Kinh Dị",
   },
   {
-    code: "musical-film",
-    name: "Âm Nhạc",
-  },
-  {
-    code: "noir-film",
-    name: "Phim Đen",
-  },
-  {
     code: "romance-film",
     name: "Tình Cảm",
   },
   {
     code: "science-fiction-film",
     name: "Khoa Học - Viễn Tưởng",
-  },
-  {
-    code: "thriller-film",
-    name: "Kinh Dị",
-  },
-  {
-    code: "western",
-    name: "Miền Tây nước Mỹ",
   },
 ];
 

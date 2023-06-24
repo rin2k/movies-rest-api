@@ -93,7 +93,9 @@ const login: RequestHandler<
       data: userObj as User,
       accessToken: accessToken,
     });
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 };
 
 const updateProfile: RequestHandler<
@@ -101,7 +103,7 @@ const updateProfile: RequestHandler<
   ResponseResult<User | undefined>,
   UpdateUserBody,
   unknown
-> = async (req, res) => {
+> = async (req, res, next) => {
   try {
     const { name, birthday, photoURL } = req.body;
     const userId = req.user?.id;
@@ -117,7 +119,7 @@ const updateProfile: RequestHandler<
     const user = await UserModel.findByPk(userId);
 
     if (!user) {
-      return res.status(200).json({
+      return sendResponse(res, {
         code: 400,
         status: "Error",
         message: "Người dùng không tồn tại.",
@@ -130,12 +132,14 @@ const updateProfile: RequestHandler<
       photoURL,
     });
 
-    return res.status(200).json({
+    return sendResponse(res, {
       code: 200,
       status: "Success",
       message: "Cập nhật thông tin thành công.",
     });
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 };
 
 const getProfile: RequestHandler<
@@ -143,7 +147,7 @@ const getProfile: RequestHandler<
   ResponseResult<User | undefined>,
   unknown,
   unknown
-> = async (req, res) => {
+> = async (req, res, next) => {
   try {
     const userId = req.user?.id;
     const user = await UserModel.findByPk(userId, {
@@ -161,7 +165,9 @@ const getProfile: RequestHandler<
       status: "Success",
       data: user,
     });
-  } catch (error) {}
+  } catch (error) {
+    next(error);
+  }
 };
 
 const UserController = {

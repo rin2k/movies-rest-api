@@ -79,9 +79,11 @@ const login = (req, res, next) => __awaiter(void 0, void 0, void 0, function* ()
             accessToken: accessToken,
         });
     }
-    catch (error) { }
+    catch (error) {
+        next(error);
+    }
 });
-const updateProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const updateProfile = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _a;
     try {
         const { name, birthday, photoURL } = req.body;
@@ -95,7 +97,7 @@ const updateProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* 
         }
         const user = yield models_1.UserModel.findByPk(userId);
         if (!user) {
-            return res.status(200).json({
+            return (0, utils_1.sendResponse)(res, {
                 code: 400,
                 status: "Error",
                 message: "Người dùng không tồn tại.",
@@ -106,15 +108,17 @@ const updateProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* 
             birthday,
             photoURL,
         });
-        return res.status(200).json({
+        return (0, utils_1.sendResponse)(res, {
             code: 200,
             status: "Success",
             message: "Cập nhật thông tin thành công.",
         });
     }
-    catch (error) { }
+    catch (error) {
+        next(error);
+    }
 });
-const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+const getProfile = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     var _b;
     try {
         const userId = (_b = req.user) === null || _b === void 0 ? void 0 : _b.id;
@@ -134,7 +138,9 @@ const getProfile = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             data: user,
         });
     }
-    catch (error) { }
+    catch (error) {
+        next(error);
+    }
 });
 const UserController = {
     signUp,

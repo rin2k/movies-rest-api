@@ -7,7 +7,7 @@ const sendResponse = <T>(res: Response<T>, result: T) => {
 
   const code = response?.code;
 
-  res.status(code).json(response);
+  res.status(200).json(response);
 };
 
 export default sendResponse;
