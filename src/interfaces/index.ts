@@ -6,3 +6,4 @@ export { type Genre } from "./genre.interface";
 export { type Movie } from "./movie.interface";
 export { type Rating } from "./rating.interface";
 export { type User } from "./user.interface";
+export { type Count } from "./count.interface";

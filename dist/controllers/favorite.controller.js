@@ -44,7 +44,6 @@ const createFavorite = (req, res, next) => __awaiter(void 0, void 0, void 0, fun
             },
         });
         if (checkfavorite) {
-            console.log("dit me");
             (0, utils_1.sendResponse)(res, {
                 code: 400,
                 status: "Error",

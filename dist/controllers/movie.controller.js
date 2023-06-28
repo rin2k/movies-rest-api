@@ -123,7 +123,12 @@ const getMovieById = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
                 movieId: id,
             },
         });
-        console.log("trigger2");
+        const views = yield models_1.CountModel.findAll({
+            where: {
+                movieId: id,
+                userId,
+            },
+        });
         const ratings = yield models_1.RatingModel.findAll({
             where: {
                 movieId: id,
@@ -143,7 +148,7 @@ const getMovieById = (req, res, next) => __awaiter(void 0, void 0, void 0, funct
             .map((genre) => genre === null || genre === void 0 ? void 0 : genre.name)
             .join(", ");
         const newCountry = (_a = data_1.countryData.find((e) => e.code === (movie === null || movie === void 0 ? void 0 : movie.country))) === null || _a === void 0 ? void 0 : _a.name;
-        const newMovie = Object.assign(Object.assign({}, movie.toJSON()), { genre: newGenre, country: newCountry, numberOfReviews: numberOfReviews, rating: numRating ? numRating : 0, hasFavorite: !!favorite });
+        const newMovie = Object.assign(Object.assign({}, movie.toJSON()), { genre: newGenre, country: newCountry, numberOfReviews: numberOfReviews, rating: numRating ? numRating : 0, hasFavorite: !!favorite, viewCounts: views.length ? views.length : 0 });
         return (0, utils_1.sendResponse)(res, {
             code: 200,
             status: "Success",

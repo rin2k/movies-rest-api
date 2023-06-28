@@ -5,6 +5,7 @@ import { countryData, genreData } from "../data";
 import { Movie, ResponseResult } from "../interfaces";
 import {
   CommentModel,
+  CountModel,
   FavoriteModel,
   MovieModel,
   RatingModel,
@@ -169,7 +170,13 @@ const getMovieById = async (
         movieId: id,
       },
     });
-    console.log("trigger2");
+
+    const views = await CountModel.findAll({
+      where: {
+        movieId: id,
+        userId,
+      },
+    });
 
     const ratings = await RatingModel.findAll({
       where: {
@@ -204,6 +211,7 @@ const getMovieById = async (
       numberOfReviews: numberOfReviews,
       rating: numRating ? numRating : 0,
       hasFavorite: !!favorite,
+      viewCounts: views.length ? views.length : 0,
     };
     return sendResponse(res, {
       code: 200,

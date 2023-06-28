@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.UserRoutes = exports.RatingRoutes = exports.MovieRoutes = exports.GenreRoutes = exports.FavoriteRoutes = exports.CountryRoutes = exports.CommentRoutes = void 0;
+exports.CountRoutes = exports.UserRoutes = exports.RatingRoutes = exports.MovieRoutes = exports.GenreRoutes = exports.FavoriteRoutes = exports.CountryRoutes = exports.CommentRoutes = void 0;
 var comment_route_1 = require("./comment.route");
 Object.defineProperty(exports, "CommentRoutes", { enumerable: true, get: function () { return __importDefault(comment_route_1).default; } });
 var country_route_1 = require("./country.route");
@@ -18,3 +18,5 @@ var rating_route_1 = require("./rating.route");
 Object.defineProperty(exports, "RatingRoutes", { enumerable: true, get: function () { return __importDefault(rating_route_1).default; } });
 var user_route_1 = require("./user.route");
 Object.defineProperty(exports, "UserRoutes", { enumerable: true, get: function () { return __importDefault(user_route_1).default; } });
+var count_route_1 = require("./count.route");
+Object.defineProperty(exports, "CountRoutes", { enumerable: true, get: function () { return __importDefault(count_route_1).default; } });

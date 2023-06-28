@@ -33,5 +33,6 @@ var TABLE_NAME;
     TABLE_NAME["COMMENTS"] = "comments";
     TABLE_NAME["FAVORITES"] = "favorites";
     TABLE_NAME["RATINGS"] = "ratings";
+    TABLE_NAME["COUNTS"] = "counts";
 })(TABLE_NAME || (exports.TABLE_NAME = TABLE_NAME = {}));
 exports.JWT_SECRET_KEY = process.env.JWT_SECRET_KEY;

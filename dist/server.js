@@ -31,6 +31,7 @@ app.use(apiRoutes, routes_1.MovieRoutes);
 app.use(apiRoutes, routes_1.CommentRoutes);
 app.use(apiRoutes, routes_1.FavoriteRoutes);
 app.use(apiRoutes, routes_1.RatingRoutes);
+app.use(apiRoutes, routes_1.CountRoutes);
 app.listen(port, () => {
     console.log(`Server đang khởi chạy tại cổng ${port}`);
 });

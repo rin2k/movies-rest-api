@@ -5,3 +5,4 @@ export { default as GenreRoutes } from "./genre.route";
 export { default as MovieRoutes } from "./movie.route";
 export { default as RatingRoutes } from "./rating.route";
 export { default as UserRoutes } from "./user.route";
+export { default as CountRoutes } from "./count.route";

@@ -49,7 +49,6 @@ const createFavorite: RequestHandler<
       },
     });
     if (checkfavorite) {
-      console.log("dit me");
       sendResponse(res, {
         code: 400,
         status: "Error",

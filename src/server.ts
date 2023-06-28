@@ -1,6 +1,7 @@
 import express, { Express, Response } from "express";
 import {
   CommentRoutes,
+  CountRoutes,
   CountryRoutes,
   FavoriteRoutes,
   GenreRoutes,
@@ -44,6 +45,7 @@ app.use(apiRoutes, MovieRoutes);
 app.use(apiRoutes, CommentRoutes);
 app.use(apiRoutes, FavoriteRoutes);
 app.use(apiRoutes, RatingRoutes);
+app.use(apiRoutes, CountRoutes);
 
 app.listen(port, () => {
   console.log(`Server đang khởi chạy tại cổng ${port}`);

@@ -5,3 +5,4 @@ export { default as GenreController } from "./genre.controller";
 export { default as MovieController } from "./movie.controller";
 export { default as RatingController } from "./rating.controller";
 export { default as UserController } from "./user.controller";
+export { default as CountController } from "./count.controller";

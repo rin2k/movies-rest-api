@@ -7,6 +7,7 @@ export enum TABLE_NAME {
   COMMENTS = "comments",
   FAVORITES = "favorites",
   RATINGS = "ratings",
+  COUNTS = "counts",
 }
 
 export const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY as string;
