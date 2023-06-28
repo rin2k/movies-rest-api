@@ -255,14 +255,16 @@ const recommendationsByMovieId = async (req: Request, res: Response) => {
 
     const genre = movie?.genre;
 
-    // const genreQuery = genre?.map((g) => `genre LIKE '%"${g}"%'`).join(" OR ");
+    const genreArray: any = genre ? genre.split(",") : [];
 
     const recommendationMovies = await MovieModel.findAll({
       where: {
         id: {
           [Op.not]: movieId,
         },
-        // [Op.or]: Sequelize.literal(genreQuery as string),
+        genre: {
+          [Op.or]: genreArray.map((g: string) => ({ [Op.like]: `%${g}%` })),
+        },
       },
       attributes: { exclude: ["genre"] },
     });

@@ -14,7 +14,7 @@ const data: Array<Genre> = [
     name: "Hoạt Hình",
   },
   {
-    code: "comedy-film",
+    code: "comedy",
     name: "Hài Hước",
   },
   {
@@ -22,23 +22,23 @@ const data: Array<Genre> = [
     name: "Giật Gân",
   },
   {
-    code: "fantasy-film",
+    code: "fantasy",
     name: "Viễn Tưởng",
   },
   {
-    code: "historical-film",
+    code: "historical",
     name: "Chiến Tranh",
   },
   {
-    code: "horror-film",
+    code: "horror",
     name: "Kinh Dị",
   },
   {
-    code: "romance-film",
+    code: "romance",
     name: "Tình Cảm",
   },
   {
-    code: "science-fiction-film",
+    code: "science-fiction",
     name: "Khoa Học - Viễn Tưởng",
   },
 ];

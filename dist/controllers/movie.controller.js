@@ -74,6 +74,7 @@ const updateMovie = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
             trailerURL,
             genre: newGenre,
             videoURL: newVideoUrl,
+            country,
         };
         movie.update(Object.assign({}, updateMovie));
         return (0, utils_1.sendResponse)(res, {
@@ -184,13 +185,15 @@ const recommendationsByMovieId = (req, res) => __awaiter(void 0, void 0, void 0,
         const { movieId } = req.params;
         const movie = yield models_1.MovieModel.findByPk(movieId);
         const genre = movie === null || movie === void 0 ? void 0 : movie.genre;
-        // const genreQuery = genre?.map((g) => `genre LIKE '%"${g}"%'`).join(" OR ");
+        const genreArray = genre ? genre.split(",") : [];
         const recommendationMovies = yield models_1.MovieModel.findAll({
             where: {
                 id: {
                     [sequelize_1.Op.not]: movieId,
                 },
-                // [Op.or]: Sequelize.literal(genreQuery as string),
+                genre: {
+                    [sequelize_1.Op.or]: genreArray.map((g) => ({ [sequelize_1.Op.like]: `%${g}%` })),
+                },
             },
             attributes: { exclude: ["genre"] },
         });
