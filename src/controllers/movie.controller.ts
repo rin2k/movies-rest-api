@@ -111,6 +111,7 @@ const updateMovie: RequestHandler<any, unknown, any, unknown> = async (
       trailerURL,
       genre: newGenre,
       videoURL: newVideoUrl as any,
+      country,
     };
 
     movie.update({ ...updateMovie });
